@@ -3,9 +3,7 @@
 
 #### PACKAGE INSTALLER ####
 library(devtools)
-#remove.packages("ffanalytics", lib="~/R/x86_64-pc-linux-gnu-library/3.6")
-#devtools::install_github(repo = "FantasyFootballAnalytics/ffanalytics", build_vignettes = TRUE, force=TRUE)
-#devtools::install_github(repo = "RandalMorris/FantasyFootball", build_vignettes = TRUE, auth_token = "c966040a1d083bd02da8ee26bad40489b1d28a1c")
+devtools::install_github(repo = "FantasyFootballAnalytics/ffanalytics", build_vignettes = TRUE, force=TRUE)
 
 #LOAD Fantasy Football Analytics Package
 print("Load Packages")
@@ -168,5 +166,16 @@ rm("player_table","Player_Data1", "Stadium_Data", "temp1", "temp2", "Weather_Dat
 #Export
 
 #change path for File
-write.xlsx(Data_all, file = paste(getwd(),"/Data/Weekly/Fantasy_Data_Raw.xlsx", sep=""), sheetName="ESPN", row.names=FALSE)
+#change path for File
+temp <- sqldf("SELECT * FROM Data_all WHERE pos = 'QB' ORDER BY Player, data_src")
+write.xlsx(temp, file = paste(getwd(),"/Data/Weekly/Fantasy_Data_Raw_Week15.xlsx", sep=""), sheetName="QB Raw Data", row.names=FALSE)
+
+temp <- sqldf("SELECT * FROM Data_all WHERE pos = 'RB' ORDER BY Player, data_src")
+write.xlsx(temp, file = paste(getwd(),"/Data/Weekly/Fantasy_Data_Raw_Week15.xlsx", sep=""), sheetName="RB Raw Data",append=TRUE, row.names=FALSE)
+
+temp <- sqldf("SELECT * FROM Data_all WHERE pos = 'WR' ORDER BY Player, data_src")
+write.xlsx(temp, file = paste(getwd(),"/Data/Weekly/Fantasy_Data_Raw_Week15.xlsx", sep=""), sheetName="WR Raw Data",append=TRUE,  row.names=FALSE)
+
+temp <- sqldf("SELECT * FROM Data_all WHERE pos = 'TE' ORDER BY Player, data_src")
+write.xlsx(temp, file = paste(getwd(),"/Data/Weekly/Fantasy_Data_Raw_Week15.xlsx", sep=""), sheetName="TE Raw Data",append=TRUE, row.names=FALSE)
 
